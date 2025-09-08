@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_31_130449) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_07_141557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_31_130449) do
     t.bigint "assigned_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status"
     t.index ["assigned_by_id"], name: "index_tasks_on_assigned_by_id"
     t.index ["created_by_id"], name: "index_tasks_on_created_by_id"
   end

@@ -1,8 +1,7 @@
 class TasksController < ApplicationController
-  before_action :authenticate_user!
-
+  # no need for :authenticate_user! anymore
   def index
-    tasks = Task.all
+    tasks = Task.where("created_by_id = ? OR assigned_by_id = ?", current_user.id, current_user.id)
     render json: tasks
   end
 
@@ -11,13 +10,25 @@ class TasksController < ApplicationController
     if task.save
       render json: task, status: :created
     else
-      render json: task.errors, status: :unprocessable_entity
+      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    task = Task.find_by(id: params[:id])
+    if task.nil?
+      render json: { error: "Task not found" }, status: :not_found
+    elsif task.created_by_id == current_user.id
+      task.destroy
+      render json: { message: "Task deleted successfully" }, status: :ok
+    else
+      render json: { error: "Not authorized to delete this task" }, status: :forbidden
     end
   end
 
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :assigned_by_id)
+    params.require(:task).permit(:title, :description, :assigned_by_id, :status)
   end
 end

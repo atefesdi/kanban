@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   devise_for :users,
-             defaults: { format: :json },
-             controllers: { sessions: 'users/sessions'}
-
+  controllers: {
+    sessions: "users/sessions"
+  }
   resources :tasks
 end

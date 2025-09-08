@@ -1,21 +1,20 @@
+import axios from "axios";
 import api from "./api";
-
- interface Task {
-  id: number;
-  title: string;
-  description: string;
-  created_by_id: number;
-  assigned_by_id: number;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-}
+import type { Task } from "../components/types";
 
 
 export const getAllTasks = async () : Promise<Task[]> => {
 
-  const response = await api.get("/tasks")
+  try {
+    const response = await api.get("/tasks")
+    return response.data;
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)){
+      console.error("get tasks failed", err.response?.data || err.message);
+    }else{
+      console.error( "get tasks failed", err );
+    }
+    throw err
+  }
 
-  console.log('response :>> ', response);
-
-  return response.data;
 }
