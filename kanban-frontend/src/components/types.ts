@@ -1,13 +1,27 @@
-export interface Task {
+export const TaskStatus = {
+  ToDo: 1,
+  InProgress: 2,
+  Done: 3,
+} as const;
+
+export type TaskStatus = typeof TaskStatus[keyof typeof TaskStatus];
+
+export interface User {
   id: number;
+  email: string;
+  name: string | null;
+}
+
+export interface Task {
+  id?: number;
   title: string;
   description?: string;
-  status?: number | undefined;
+  status?: TaskStatus;
   created_by_id?: number;
   assigned_by_id?: number;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-}
+    creator?: User | null;
+  assignee?: User | null;
+ }
 
 export interface Column {
   id: number;
@@ -16,7 +30,14 @@ export interface Column {
 }
 
 export interface loginResponse {
-  user: {id: number, name: string, email: string,}
+  user: {id: string, name: string, email: string,}
   message: string;
   token: string;
 }
+
+
+export type TaskInput = {
+  title: string;
+  description: string;
+  status: number;
+};
