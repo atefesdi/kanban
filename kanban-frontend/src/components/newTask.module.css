@@ -7,13 +7,14 @@
   justify-content: center;
   background: rgba(12, 14, 20, 0.45);
   backdrop-filter: blur(4px);
-  z-index: 1200;
   padding: 1.25rem;
+  height: 100vh ;
 }
 
 /* card */
 .addTaskForm {
-  position: relative;
+  position: fixed;
+  z-index: 999;
   width: 100%;
   max-width: 520px;
   background: linear-gradient(180deg, #ffffff, #fbfdff);
@@ -28,7 +29,6 @@
 
 /* close */
 .closeBtn {
-  position: absolute;
   top: 12px;
   right: 12px;
   background: transparent;
@@ -152,6 +152,7 @@
 
 /* small helpers */
 .buttonContent { display: inline-flex; align-items: center; gap: 8px; }
+
 
 /* animations */
 @keyframes scaleIn {

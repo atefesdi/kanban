@@ -4,6 +4,7 @@ import { getAllTasks , deleteTask, editTask} from "../api/task";
 import { useEffect, useState } from "react";
 import styles from "./KanbanBoard.module.css";
 import NewTask from "./NewTask";
+import { IoAdd } from "react-icons/io5";
 
 const initialColumns: Column[] = [
   { id: TaskStatus.ToDo, title: "To Do", tasks: [] },
@@ -87,8 +88,9 @@ const KanbanBoard = () => {
 
   return (
     <>
-    <button onClick={()=> setTaskPopup(true)}>Add New Task</button>
-   {taskPooup && <NewTask activeColumn={activeColumn} setActiveColumn={setActiveColumn} setColumns={setColumns} columns={columns}/>}
+    <button className={styles.popup} onClick={()=> setTaskPopup(true)}>Add New Task <IoAdd /></button>
+
+   {taskPooup && <NewTask activeColumn={activeColumn} setActiveColumn={setActiveColumn} setColumns={setColumns} columns={columns} setTaskPopup={setTaskPopup}/>}
     <div className={styles.boardWrapper}>
       <div className={styles.board}>
         {columns.map((column) => (

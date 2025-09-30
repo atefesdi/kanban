@@ -63,7 +63,7 @@
 .removeBtn {
   background: transparent;
   border: none;
-  color: #999;
+  color: #333;
   cursor: pointer;
   font-size: 14px;
   padding: 2px 6px;
@@ -108,4 +108,8 @@
   word-break: break-word;
 }
 
-/* Adjust task layout */
+/* popup */
+.popup {
+ padding: auto;
+
+}
