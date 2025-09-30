@@ -33,11 +33,23 @@ export const createTask = async (task: Task)  =>{
 
 
 export const deleteTask = async (taskId: number) : Promise<{message : string} | undefined> => {
-
   try{
    const response = await api.delete<{message : string}>(`/tasks/${taskId}`)
    return response.data
   }catch(err: unknown){
    console.error ("delete task failed", axios.isAxiosError(err) ? err.response?.data || err.message : err );
+  }
+}
+
+
+export const editTask = async ( task : Task) : Promise<{message: string} | undefined> =>{
+  try {
+    const response = await api.put(`/tasks/${task.id}`, task)
+    console.log('response :>> ', response);
+    return response?.data
+  } catch (err: unknown) {
+    if(axios.isAxiosError(err)){
+      console.error("Edit task failed", err.response?.data || err.message)
+    }
   }
 }

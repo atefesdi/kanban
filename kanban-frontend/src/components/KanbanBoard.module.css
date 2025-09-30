@@ -10,45 +10,6 @@
   border-radius: 10px;
   height: 500px;
 }
-
-/* Controls */
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.input,
-.select {
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-.input:focus,
-.select:focus {
-  outline: none;
-  border-color: #635dff;
-  box-shadow: 0 0 0 2px rgba(99, 93, 255, 0.2);
-}
-
-.button {
-  background: #635dff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s ease;
-}
-
-.button:hover {
-  background: #5149d6;
-}
-
 /* Board */
 .board {
   display: flex;
@@ -82,15 +43,13 @@
 .task {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   background: #f4f5f7;
-  border-radius: 6px;
-  padding: 0.6rem;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
   margin-bottom: 0.6rem;
-  font-size: 14px;
   cursor: grab;
   transition: background 0.2s ease, transform 0.1s ease;
-  color: #333;
 }
 
 .task:hover {
@@ -123,3 +82,30 @@
   /* transition: background 0.15s ease; */
 }
 .task.dragging { opacity: 0.5; transform: scale(0.99); }
+
+
+/* Task content wrapper */
+.taskContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+/* Task title */
+.taskTitle {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Task description */
+.taskDescription {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Adjust task layout */

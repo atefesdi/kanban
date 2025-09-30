@@ -1,8 +1,9 @@
 // KanbanBoard.tsx
-import {TaskStatus, type Column, type Task, type TaskInput } from "./types";
-import { getAllTasks , createTask, deleteTask} from "../api/task";
+import {TaskStatus, type Column, type Task } from "./types";
+import { getAllTasks , deleteTask, editTask} from "../api/task";
 import { useEffect, useState } from "react";
 import styles from "./KanbanBoard.module.css";
+import NewTask from "./NewTask";
 
 const initialColumns: Column[] = [
   { id: TaskStatus.ToDo, title: "To Do", tasks: [] },
@@ -10,11 +11,9 @@ const initialColumns: Column[] = [
   { id: TaskStatus.Done, title: "Done", tasks: [] },
 ];
 
-const initialTask: TaskInput = { title: "", description: "", status: TaskStatus.ToDo };
-
 const KanbanBoard = () => {
   const [columns, setColumns] = useState<Column[]>(initialColumns);
-  const [newTask, setNewTask] = useState<TaskInput>(initialTask);
+  const [taskPooup, setTaskPopup] = useState(false);
   const [activeColumn, setActiveColumn] = useState(1);
   const [dragInfo, setDragInfo] = useState<Task|null>(null);
   const [hoverColumn, setHoverColumn] = useState<number | null>(null);
@@ -41,53 +40,18 @@ const KanbanBoard = () => {
   }, []);
 
 
-  const buildTask =(task:TaskInput, statusTask:TaskStatus) => ({
-    ...task,
-    status: statusTask,
-    id: Math.random()
-  })
-
-  const addNewTask = async () => {
-
-    if (!newTask.title.trim()) return;
-    const taskToAdd = buildTask(newTask, TaskStatus.InProgress);
-
-    setColumns(prev => prev.map(col => col.id === activeColumn ? {...col, tasks: [...col.tasks, taskToAdd] } : col))
-    setNewTask(initialTask);
-
-    try {
-      const response = await createTask(taskToAdd);
-      if (response?.id){
-        setColumns(prev => prev.map(col => ({...col, tasks : col.tasks.map(task =>
-          task.id === taskToAdd.id ? {...task, id: response.id} : task
-         )})))
-
-      }
-    } catch (error) {
-      console.error("Failed to create task:", error);
-
-      setColumns((prev) =>
-      prev.map((col) =>
-        col.id === activeColumn
-          ? { ...col, tasks: col.tasks.filter((t) => t.id !== taskToAdd.id) }
-          : col
-      )
-    );
-    }
-
-  };
 
   const removeTask = async(taskId: number, columnId: number) => {
-    const updatedColumns = columns.map((col) =>
-      col.id === columnId
-        ? { ...col, tasks: col.tasks.filter((t) => t.id !== taskId) }
-        : col
-    );
-    setColumns(updatedColumns);
-
     try {
-    const result = await deleteTask(taskId);
-    console.log(result?.message);
+      const result = await deleteTask(taskId);
+      if (result?.message === 'Task deleted successfully') {
+        const updatedColumns = columns.map((col) =>
+        col.id === columnId
+          ? { ...col, tasks: col.tasks.filter((t) => t.id !== taskId) }
+          : col
+      );
+      setColumns(updatedColumns);
+    }
     } catch {
       console.error("Failed to delete task from server.");
     }
@@ -97,52 +61,35 @@ const KanbanBoard = () => {
     setDragInfo(task);
   }
 
-  const handleDrop = (columnId:number)=>{
+  const handleDrop = async (columnId:number)=>{
     if (!dragInfo) return
     const updatedColumns = columns.map(((col) =>
       col.tasks.find( t => t.id === dragInfo.id) ? {...col, tasks: col.tasks.filter((t) => t.id !== dragInfo.id)} :col
     ))
 
     const targetIndex = updatedColumns.findIndex((col) => col.id === columnId)
+    const updatedTask = {...dragInfo, status: columnId }
     if (targetIndex >= 0) {
-      updatedColumns[targetIndex].tasks.push({...dragInfo, status: columnId });
+      updatedColumns[targetIndex].tasks.push(updatedTask);
     }
 
+    try {
+    const data = await editTask(updatedTask)
+    console.log('data :>> ', data);
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
     setColumns(updatedColumns);
     setDragInfo(null);
+
+
   }
 
   return (
+    <>
+    <button onClick={()=> setTaskPopup(true)}>Add New Task</button>
+   {taskPooup && <NewTask activeColumn={activeColumn} setActiveColumn={setActiveColumn} setColumns={setColumns} columns={columns}/>}
     <div className={styles.boardWrapper}>
-      {/* Controls */}
-      <div className={styles.controls}>
-        <select
-          value={activeColumn}
-          onChange={(e) => setActiveColumn(Number(e.target.value) as TaskStatus)}
-          className={styles.select}
-        >
-          {columns.map((col) => (
-            <option key={col.id}  value={col.id}>
-              {col.title}
-            </option>
-          ))}
-        </select>
-
-        <input
-          value={newTask.title}
-          onChange={(e) => setNewTask({
-            ...newTask,
-            title: e.target.value
-          })}
-          placeholder="Add new task..."
-          className={styles.input}
-        />
-        <button onClick={addNewTask} className={styles.button}>
-          Add
-        </button>
-      </div>
-
-      {/* Board */}
       <div className={styles.board}>
         {columns.map((column) => (
           <div key={column.id}
@@ -161,8 +108,13 @@ const KanbanBoard = () => {
                 handleDragStart(task)
                 e.dataTransfer.effectAllowed = "move";
               }}
-                onDragEnd={() => setDragInfo(null)}>
-                <span>{task.title}</span>
+              onDragEnd={() => setDragInfo(null)}>
+                <div className={styles.taskContent}>
+                  <span className={styles.taskTitle}>{task.title}</span>
+                  {task.description && (
+                    <span className={styles.taskDescription}>{task.description}</span>
+                  )}
+                </div>
                 <button
                   className={styles.removeBtn}
                   onClick={() => removeTask(task.id, column.id)}
@@ -175,6 +127,7 @@ const KanbanBoard = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

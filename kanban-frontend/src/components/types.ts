@@ -16,10 +16,10 @@ export interface Task {
   id?: number;
   title: string;
   description?: string;
-  status?: TaskStatus;
+  status?: number;
   created_by_id?: number;
   assigned_by_id?: number;
-    creator?: User | null;
+  creator?: User | null;
   assignee?: User | null;
  }
 
