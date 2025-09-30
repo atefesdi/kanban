@@ -26,6 +26,20 @@ class TasksController < ApplicationController
     end
   end
 
+  def update
+    task = Task.find_by(id: params[:id]);
+
+    if task.nil?
+      render json: { error: "Task not found" }, status: :not_found
+    elsif task.created_by_id != current_user.id && task.assigned_by_id != current_user.id
+      render json: { error: "Not authorized to update this task" }, status: :forbidden
+    elsif task.update(task_params)
+      render json: task, status: :ok
+    else
+      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def task_params
