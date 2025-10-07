@@ -1,3 +1,4 @@
+
 class Users::SessionsController < Devise::SessionsController
    respond_to :json
 
@@ -10,5 +11,9 @@ class Users::SessionsController < Devise::SessionsController
       token: token,
       user: { id: resource.id, email: resource.email, name: resource.email }
     }, status: :ok
+  end
+
+  def respond_to_on_destroy
+    head :no_content
   end
 end

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import styles from "./KanbanBoard.module.css";
 import NewTask from "./NewTask";
 import { IoAdd } from "react-icons/io5";
+import { useAuth } from "../context/AuthContext";
 
 const initialColumns: Column[] = [
   { id: TaskStatus.ToDo, title: "To Do", tasks: [] },
@@ -19,8 +20,11 @@ const KanbanBoard = () => {
   const [dragInfo, setDragInfo] = useState<Task|null>(null);
   const [hoverColumn, setHoverColumn] = useState<number | null>(null);
 
+  const {isAuthenticated} = useAuth()
+
 
   useEffect(() => {
+    console.log('is :>> ', isAuthenticated);
     const fetchData = async () => {
       try {
         const tasks = await getAllTasks();

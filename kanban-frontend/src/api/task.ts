@@ -9,7 +9,7 @@ export const getAllTasks = async () : Promise<Task[]> => {
     return response.data;
   } catch (err: unknown) {
     if (axios.isAxiosError(err)){
-      console.error("get tasks failed", err.response?.data || err.message);
+      console.error("get tasks failed",  err.message);
     }else{
       console.error( "get tasks failed", err );
     }
@@ -24,7 +24,7 @@ export const createTask = async (task: Task)  =>{
     return response.data;
   }catch(err : unknown){
     if(axios.isAxiosError(err)){
-      console.error("create task is failed", err.response?.data || err.message)
+      console.error("create task is failed",err.message)
     }else{
       console.error ("create task failed", err );
     }

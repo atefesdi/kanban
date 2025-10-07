@@ -1,6 +1,88 @@
-.container {
+.appContainer {
+  display: flex;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #2d3748;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navLink {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: #63b3ed;
+}
+
+/* Main Content */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  height: 60px;
+  background-color: #3182ce;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.userSection {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  gap: 15px;
+}
+
+.logoutBtn {
+  background-color: #e53e3e;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background-color: #c53030;
+}
+
+/* Board container */
+.boardContainer {
+  flex: 1;
+  background-color: #f7fafc;
+  padding: 20px;
+  overflow-y: auto;
 }

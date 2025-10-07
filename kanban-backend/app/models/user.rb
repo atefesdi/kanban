@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
+  validates :name, presence: true
+
   # Associations for Kanban
   has_many :created_tasks, class_name: "Task", foreign_key: "created_by_id"
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigned_by_id"
