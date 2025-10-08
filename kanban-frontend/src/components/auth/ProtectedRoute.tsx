@@ -9,7 +9,7 @@ interface ProtectedRouteType{
 const ProtectedRoute = ({children}: ProtectedRouteType) => {
 
    const { isAuthenticated, loading } = useAuth();
-   
+
   if (loading) {
     return <div>Loading...</div>;
   }

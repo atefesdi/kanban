@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface Task {
-  id?: number;
+  id: number;
   title: string;
   description?: string;
   status?: number;
@@ -30,7 +30,7 @@ export interface Column {
 }
 
 export interface loginResponse {
-  user: {id: string, name: string, email: string,}
+  user: User
   message: string;
   token: string;
 }

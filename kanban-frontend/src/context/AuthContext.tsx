@@ -32,7 +32,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       setJwt(savedToken);
       setIsAuthenticated(true);
       setLoading(false);
+    }else {
+    setIsAuthenticated(false);
     }
+    setLoading(false);
   }, []);
 
   const signIn = async (email: string, password: string) => {

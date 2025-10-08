@@ -37,3 +37,4 @@ export const signUpUser = async (email: string, password: string, name: string, 
   throw err;
   }
 };
+

@@ -29,7 +29,10 @@ const NewTask = ({activeColumn, setActiveColumn, setColumns, columns, setTaskPop
     setLoading(true);
 
     try {
-        const response = await createTask({ ...newTask, status: activeColumn });
+        const response = await createTask({
+          ...newTask, status: activeColumn,
+          id: 0
+        });
         if (response?.id != null) {
           setColumns(prev => prev.map(col => col.id === activeColumn ? {...col, tasks: [...col.tasks, { ...response }] } : col))
           setNewTask(initialTask);

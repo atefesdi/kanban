@@ -1,8 +1,15 @@
 import React from "react";
 import KanbanBoard from "../components/KanbanBoard";
+import { useAuth } from "../context/AuthContext";
 import styles from "./home.module.css";
 
 const Home = () => {
+   const {logout} = useAuth();
+
+
+  const logoutHandler = () => {
+    logout()
+  }
   return (
     <div className={styles.appContainer}>
       {/* Sidebar */}
@@ -23,7 +30,7 @@ const Home = () => {
           <h1 className={styles.title}>My Kanban Board</h1>
           <div className={styles.userSection}>
             <span>Ati</span>
-            <button className={styles.logoutBtn}>Logout</button>
+            <button onClick={logoutHandler} className={styles.logoutBtn}>Logout</button>
           </div>
         </header>
 
@@ -37,4 +44,3 @@ const Home = () => {
 };
 
 export default Home;
-
