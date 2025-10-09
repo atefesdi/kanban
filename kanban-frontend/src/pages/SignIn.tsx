@@ -21,5 +21,5 @@ export default function SignIn() {
     }
   };
 
-  return <AuthForm type="signin" onSubmit={handleSubmit} error={error} />;
+  return <AuthForm type="signin" onSubmit={handleSubmit} error={error} setError={setError} />;
 };

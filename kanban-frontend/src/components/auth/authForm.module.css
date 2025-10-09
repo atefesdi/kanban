@@ -31,7 +31,6 @@
   text-align: center;
   color: #6b7280;
   font-size: 0.95rem;
-  margin-bottom: 2rem;
 }
 
 .field {
@@ -83,14 +82,19 @@
   transform: translateY(-1px);
 }
 
+/* error alert */
 .error {
   color: #dc2626;
   text-align: center;
   font-size: 0.9rem;
-  margin-bottom: 1rem;
-  background: rgba(252, 165, 165, 0.15);
+  margin-bottom: .5rem;
   padding: 0.5rem;
   border-radius: 6px;
+}
+
+.inputError{
+  border: 1px solid #dc262663;
+  background-color: #dc262607;
 }
 
 .switchText {

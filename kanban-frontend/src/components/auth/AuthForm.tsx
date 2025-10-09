@@ -8,38 +8,60 @@ interface AuthFormProps {
   type: "signin";
   onSubmit: (data: SignInData) => Promise<void>;
   error?: string;
+  setError: (error: string) => void;
 }
 
 interface AuthFormSignUpProps {
   type: "signup";
   onSubmit: (data: SignUpData) => Promise<void>;
   error?: string;
+  setError: (error: string) => void;
 }
 type Props = AuthFormProps | AuthFormSignUpProps;
 
-const AuthForm: React.FC<Props> = ({ type, onSubmit, error }) => {
+const AuthForm: React.FC<Props> = ({ type, onSubmit, error, setError }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [touched, setTouched] = useState(false);
 
   const isSignUp = type === "signup";
 
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched(true);
+
+    if (!email.trim() || !password.trim() || (isSignUp && (!name.trim() || !passwordConfirmation.trim()))) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    setError("");
+
     if (isSignUp) {
-      // Type assertion ensures name & passwordConfirmation are present
+      if ( password.trim() !== passwordConfirmation.trim() ) {
+        setError("Passwords do not match.");
+        return
+      }
       onSubmit({ email, password, name, passwordConfirmation } as SignUpData);
     } else {
       onSubmit({ email, password } as SignInData);
     }
   };
 
+  const inputClass = (value: string) =>
+    `${styles.input} ${touched && !value.trim() ? styles.inputError : ""}`;
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.card}>
+      <form onSubmit={handleSubmit} noValidate className={styles.card}>
         <h2 className={styles.title}>
           {isSignUp ? "Create Account" : "Welcome Back"}
         </h2>
@@ -57,8 +79,7 @@ const AuthForm: React.FC<Props> = ({ type, onSubmit, error }) => {
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={styles.input}
-            required
+            className={inputClass(email)}
           />
         </div>
 
@@ -71,8 +92,7 @@ const AuthForm: React.FC<Props> = ({ type, onSubmit, error }) => {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={styles.input}
-              required
+              className={inputClass(name)}
             />
           </div>
         )}
@@ -85,8 +105,7 @@ const AuthForm: React.FC<Props> = ({ type, onSubmit, error }) => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
-            required
+            className={inputClass(password)}
           />
         </div>
 
@@ -99,8 +118,7 @@ const AuthForm: React.FC<Props> = ({ type, onSubmit, error }) => {
               placeholder="Re-enter your password"
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
-              className={styles.input}
-              required
+              className={inputClass(passwordConfirmation)}
             />
           </div>
         )}

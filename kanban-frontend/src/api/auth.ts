@@ -11,12 +11,11 @@ export const signInUser = async (email: string, password: string): Promise<login
     return response.data
 
   } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-    console.error("Login failed:", err.response?.data || err.message);
-  } else {
-    console.error("Login failed:", err);
-  }
-  throw err;
+    if (axios.isAxiosError(err)) {
+      throw new Error(err?.response?.data);
+    }else{
+      throw new Error("Unexpected error occurred.");
+    }
   }
 };
 
@@ -25,16 +24,13 @@ export const signUpUser = async (email: string, password: string, name: string, 
     const response = await api.post("/users", {
       user: { email, password , name, password_confirmation: passwordConfirmation},
     });
-    console.log('response.data :>> ', response.data);
     return response.data
 
   } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-    console.error("Login failed:", err.message);
-  } else {
-    console.error("Login failed:", err);
-  }
-  throw err;
+    if (axios.isAxiosError(err)) {
+      throw new Error(err?.response?.data);
+    }else{
+      throw new Error("Unexpected error occurred.");
+    }
   }
 };
-

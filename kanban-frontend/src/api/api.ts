@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance,type InternalAxiosRequestConfig} from "axios";
+import axios, {type AxiosInstance,type InternalAxiosRequestConfig} from "axios";
 
 const api: AxiosInstance = axios.create({
   baseURL: "http://localhost:3000",
@@ -15,4 +15,4 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig): InternalAxios
   return config
 })
 
-export default api
+export default api;

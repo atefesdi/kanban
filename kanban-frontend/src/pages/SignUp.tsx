@@ -6,6 +6,7 @@ import AuthForm from "../components/auth/AuthForm";
 
 const SignUp = () => {
   const [error, setError] = useState("");
+
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const SignUp = () => {
     }
   };
 
-  return <AuthForm type="signup" onSubmit={handleSubmit} error={error} />;
+  return <AuthForm type="signup" onSubmit={handleSubmit} error={error} setError={setError} />;
 }
 
 export default SignUp
