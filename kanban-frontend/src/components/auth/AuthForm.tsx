@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./authForm.module.css";
+import PasswordInput from "./PasswordInput";
 
 type SignInData = { email: string; password: string };
 type SignUpData = { email: string; password: string; name: string; passwordConfirmation: string };
@@ -56,6 +57,7 @@ const AuthForm: React.FC<Props> = ({ type, onSubmit, error, setError }) => {
     }
   };
 
+
   const inputClass = (value: string) =>
     `${styles.input} ${touched && !value.trim() ? styles.inputError : ""}`;
 
@@ -99,22 +101,21 @@ const AuthForm: React.FC<Props> = ({ type, onSubmit, error, setError }) => {
 
         <div className={styles.field}>
           <label htmlFor="password" className={styles.label}>Password</label>
-          <input
+
+          <PasswordInput
             id="password"
-            type="password"
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={inputClass(password)}
-          />
+            />
         </div>
 
         {isSignUp && (
           <div className={styles.field}>
             <label htmlFor="passwordConfirmation" className={styles.label}>Confirm Password</label>
-            <input
+            <PasswordInput
               id="passwordConfirmation"
-              type="password"
               placeholder="Re-enter your password"
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}

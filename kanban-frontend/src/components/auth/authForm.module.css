@@ -47,6 +47,7 @@
 }
 
 .input {
+  position: relative;
   height: 37px;
   padding: 0.5rem 0.75rem;
   border: 1px solid #d1d5db;
@@ -55,6 +56,7 @@
   color: #111827;
   background-color: #fff;
   transition: all 0.2s ease;
+  width: 100%;
 }
 
 .input:focus {
@@ -75,6 +77,16 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.25s ease, transform 0.1s ease;
+}
+
+.button:focus {
+  outline: none;    /* remove default focus outline */
+  box-shadow: none; /* remove any shadow applied by browser */
+}
+
+/* Optional active effect */
+.button:active {
+  transform: scale(0.98);
 }
 
 .button:hover {
