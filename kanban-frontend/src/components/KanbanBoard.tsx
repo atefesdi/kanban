@@ -121,9 +121,9 @@ const KanbanBoard = () => {
         <NewTask
           activeColumn={activeColumn}
           setActiveColumn={setActiveColumn}
-          setColumns={setColumns}
           columns={columns}
           setTaskPopup={setTaskPopup}
+          subscription={subscriptionRef.current}
         />
       )}
 

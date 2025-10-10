@@ -1,25 +1,25 @@
 import { useState } from 'react';
-import { createTask} from "../api/task";
 import { TaskStatus, type TaskInput, type Column } from "../types/types";
 import styles from "./newTask.module.css"
+import { sendTaskAction , type TaskChannelSubscription} from '../websocket/tasks';
 
 const initialTask: TaskInput = { title: "", description: "", status: TaskStatus.ToDo };
 
 interface NewTaskProps {
   activeColumn: number;
   setActiveColumn: (col: number) => void;
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
   columns: Column[];
   setTaskPopup: (arg0: boolean)=>void;
+  subscription: TaskChannelSubscription | null;
 }
 
-const NewTask = ({activeColumn, setActiveColumn, setColumns, columns, setTaskPopup}: NewTaskProps) => {
+const NewTask = ({activeColumn, setActiveColumn, columns, setTaskPopup, subscription}: NewTaskProps) => {
   const [newTask, setNewTask] = useState<TaskInput>(initialTask);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
 
-  const addNewTask = async () => {
+  const addNewTask =  () => {
     setError(null)
     if (!newTask.title.trim()) {
       setError("Please enter a title");
@@ -28,25 +28,30 @@ const NewTask = ({activeColumn, setActiveColumn, setColumns, columns, setTaskPop
 
     setLoading(true);
 
-    try {
-        const response = await createTask({
-          ...newTask, status: activeColumn,
-          id: 0
-        });
-        if (response?.id != null) {
-          setColumns(prev => prev.map(col => col.id === activeColumn ? {...col, tasks: [...col.tasks, { ...response }] } : col))
-          setNewTask(initialTask);
-          setTaskPopup(false)
-        }else{
-          setError("Server did not return the created task.");
-        }
-      } catch (err) {
-        console.error("Failed to create task:", err);
-        setError("Failed to create task. Try again.");
-      }finally {
+
+       if (!subscription) {
+    setError("No active connection");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    sendTaskAction(subscription, "create", {
+      ...newTask,
+      status: activeColumn,
+    });
+
+    setNewTask(initialTask);
+    setTaskPopup(false);
+  } catch (err) {
+    console.error(err);
+    setError("Failed to create task");
+  } finally {
+    setLoading(false);
+  }
       setLoading(false);
     }
-    };
+
 
   return (
     <>
