@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   def create
     task = current_user.created_tasks.build(task_params)
     if task.save
+      ActionCable.server.broadcast("tasks:all", { action: "created", task: task })
       render json: task, status: :created
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
@@ -20,6 +21,7 @@ class TasksController < ApplicationController
     if task.nil?
       render json: { error: "Task not found" }, status: :not_found
     elsif task.created_by_id == current_user.id
+      ActionCable.server.broadcast("tasks:all", { action: "destroyed", task: task })
       task.destroy
       render json: { message: "Task deleted successfully" }, status: :ok
     else
@@ -35,6 +37,7 @@ class TasksController < ApplicationController
     elsif task.created_by_id != current_user.id && task.assigned_by_id != current_user.id
       render json: { error: "Not authorized to update this task"}, status: :forbidden
     elsif task.update(task_params)
+      ActionCable.server.broadcast("tasks:all", { action: "updated", task: task })
       render json: task, status: :ok
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity

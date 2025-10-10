@@ -13,7 +13,7 @@ type PasswordInputProps = {
 };
 
 const PasswordInput: React.FC<PasswordInputProps> = ({ value, onChange, name, id , placeholder, className}) => {
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
       <div className={styles.container}>

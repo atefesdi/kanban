@@ -1,6 +1,6 @@
 import axios from "axios";
 import api from "./api";
-import type { Task } from "../components/types";
+import type { Task } from "../types/types";
 
 
 export const getAllTasks = async () : Promise<Task[]> => {

@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { loginResponse } from "../components/types";
+import type { loginResponse } from "../types/types";
 import { signInUser, signUpUser } from "../api/auth";
 
 interface AuthContextType{

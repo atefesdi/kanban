@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createTask} from "../api/task";
-import { TaskStatus, type TaskInput, type Column } from "./types";
+import { TaskStatus, type TaskInput, type Column } from "../types/types";
 import styles from "./newTask.module.css"
 
 const initialTask: TaskInput = { title: "", description: "", status: TaskStatus.ToDo };

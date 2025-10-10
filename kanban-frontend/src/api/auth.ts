@@ -1,6 +1,6 @@
 import axios from "axios";
 import api from "./api";
-import type { loginResponse } from "../components/types";
+import type { loginResponse } from "../types/types";
 
 
 export const signInUser = async (email: string, password: string): Promise<loginResponse> => {
@@ -12,6 +12,7 @@ export const signInUser = async (email: string, password: string): Promise<login
 
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
+
       throw new Error(err?.response?.data);
     }else{
       throw new Error("Unexpected error occurred.");
@@ -28,6 +29,7 @@ export const signUpUser = async (email: string, password: string, name: string, 
 
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
+            console.log('err :>> ', err);
       throw new Error(err?.response?.data);
     }else{
       throw new Error("Unexpected error occurred.");
