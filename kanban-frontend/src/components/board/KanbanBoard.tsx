@@ -1,7 +1,7 @@
 // KanbanBoard.tsx
 import { TaskStatus, type Column, type Task, initialColumns } from "../../types/types";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import styles from "./KanbanBoard.module.css";
 import { IoAdd } from "react-icons/io5";
 import { subscribeToTasks, sendTaskAction, type TaskPayload, type TaskChannelSubscription } from "../../websocket/tasks";
@@ -157,6 +157,7 @@ const KanbanBoard = () => {
             </div>
           ))}
         </div>
+        <Outlet />
       </div>
     </>
   );

@@ -13,8 +13,9 @@ function App() {
       <Routes>
         <Route path="/signin" element={<SignIn/>} />
         <Route path="/signup" element={<SignUp/>} />
-        <Route path="/new-task" element={ <NewTask/> } />
-        <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>} >
+          <Route path="/new-task" element={ <NewTask/> } />
+        </Route>
       </Routes>
   )
 }

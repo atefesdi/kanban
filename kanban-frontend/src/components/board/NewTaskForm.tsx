@@ -12,6 +12,7 @@ import {
   subscribeToTasks,
   type TaskChannelSubscription,
 } from "../../websocket/tasks";
+import { useNavigate } from "react-router-dom";
 
 const initialTask: TaskInput = {
   title: "",
@@ -27,6 +28,7 @@ const NewTaskForm = () => {
   const [activeColumn, setActiveColumn] = useState<number>(TaskStatus.ToDo);
 
   const subscriptionRef = useRef<TaskChannelSubscription | null>(null);
+  const navifation = useNavigate()
 
   useEffect(() => {
     const subscription = subscribeToTasks(() => {});
@@ -54,6 +56,8 @@ const NewTaskForm = () => {
       ...newTask,
       status: activeColumn,
     });
+
+    navifation("/")
 
     setLoading(false);
     setNewTask(initialTask);
