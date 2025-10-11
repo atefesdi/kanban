@@ -1,28 +1,20 @@
 // KanbanBoard.tsx
-import { TaskStatus, type Column, type Task } from "../types/types";
+import { TaskStatus, type Column, type Task, initialColumns } from "../../types/types";
 import { useEffect, useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import styles from "./KanbanBoard.module.css";
-import NewTask from "./NewTask";
 import { IoAdd } from "react-icons/io5";
-import { subscribeToTasks, sendTaskAction, type TaskPayload, type TaskChannelSubscription } from "../websocket/tasks";
+import { subscribeToTasks, sendTaskAction, type TaskPayload, type TaskChannelSubscription } from "../../websocket/tasks";
 
-const initialColumns: Column[] = [
-  { id: TaskStatus.ToDo, title: "To Do", tasks: [] },
-  { id: TaskStatus.InProgress, title: "In Progress", tasks: [] },
-  { id: TaskStatus.Done, title: "Done", tasks: [] },
-];
 
 const KanbanBoard = () => {
   const [columns, setColumns] = useState<Column[]>(initialColumns);
-  const [taskPopup, setTaskPopup] = useState(false);
-  const [activeColumn, setActiveColumn] = useState(1);
   const [dragInfo, setDragInfo] = useState<Task | null>(null);
   const [hoverColumn, setHoverColumn] = useState<number | null>(null);
 
-  // Store subscription in a ref to use it across handlers
   const subscriptionRef = useRef<TaskChannelSubscription | null>(null);
 
-  // Subscribe to WebSocket once
+
   useEffect(() => {
     const subscription = subscribeToTasks((payload: TaskPayload & { tasks?: Task[] }) => {
       if (payload.action === "initial" && payload.tasks) {
@@ -113,19 +105,9 @@ const KanbanBoard = () => {
 
   return (
     <>
-      <button className={styles.popup} onClick={() => setTaskPopup(true)}>
+      <Link to="/new-task" className={styles.popup}>
         Add New Task <IoAdd />
-      </button>
-
-      {taskPopup && (
-        <NewTask
-          activeColumn={activeColumn}
-          setActiveColumn={setActiveColumn}
-          columns={columns}
-          setTaskPopup={setTaskPopup}
-          subscription={subscriptionRef.current}
-        />
-      )}
+      </Link>
 
       <div className={styles.boardWrapper}>
         <div className={styles.board}>

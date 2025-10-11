@@ -41,3 +41,9 @@ export type TaskInput = {
   description: string;
   status: number;
 };
+
+export const initialColumns: Column[] = [
+  { id: TaskStatus.ToDo, title: "To Do", tasks: [] },
+  { id: TaskStatus.InProgress, title: "In Progress", tasks: [] },
+  { id: TaskStatus.Done, title: "Done", tasks: [] },
+];

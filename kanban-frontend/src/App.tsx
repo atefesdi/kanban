@@ -3,6 +3,7 @@ import SignIn from "./pages/SignIn";
 import Home from "./pages/home";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import SignUp from "./pages/SignUp";
+import NewTask from "./pages/NewTask";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/signin" element={<SignIn/>} />
         <Route path="/signup" element={<SignUp/>} />
+        <Route path="/new-task" element={ <NewTask/> } />
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>} />
       </Routes>
   )

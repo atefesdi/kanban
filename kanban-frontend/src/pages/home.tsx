@@ -1,5 +1,5 @@
 import { useState } from "react";
-import KanbanBoard from "../components/KanbanBoard";
+import KanbanBoard from "../components/board/KanbanBoard";
 import { useAuth } from "../context/AuthContext";
 import styles from "./home.module.css";
 import {
