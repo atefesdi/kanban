@@ -12,7 +12,7 @@ const NewTaskPage = () => {
     <div className={styles.overlay} onClick={handleClose}>
       <div
         className={styles.modal}
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+        onClick={(e) => e.stopPropagation()} 
       >
         <NewTaskForm />
       </div>

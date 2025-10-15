@@ -4,12 +4,15 @@ import { AuthProvider } from './context/AuthContext.tsx'
 import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
+import { TaskWebSocketProvider } from './context/TaskWebSocketContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <TaskWebSocketProvider>
+          <App />
+        </TaskWebSocketProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

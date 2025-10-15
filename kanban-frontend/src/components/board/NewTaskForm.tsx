@@ -1,5 +1,5 @@
 // src/components/board/NewTaskForm.tsx
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   TaskStatus,
   type TaskInput,
@@ -7,11 +7,8 @@ import {
   initialColumns,
 } from "../../types/types";
 import styles from "./newTaskForm.module.css";
-import {
-  sendTaskAction,
-  subscribeToTasks,
-  type TaskChannelSubscription,
-} from "../../websocket/tasks";
+import { sendTaskAction } from "../../websocket/tasks";
+import { useTaskWebSocket } from "../../context/TaskWebSocketContext";
 import { useNavigate } from "react-router-dom";
 
 const initialTask: TaskInput = {
@@ -27,15 +24,10 @@ const NewTaskForm = () => {
   const [columns] = useState<Column[]>(initialColumns);
   const [activeColumn, setActiveColumn] = useState<number>(TaskStatus.ToDo);
 
-  const subscriptionRef = useRef<TaskChannelSubscription | null>(null);
+  const { subscription } = useTaskWebSocket();
   const navifation = useNavigate()
 
-  useEffect(() => {
-    const subscription = subscribeToTasks(() => {});
-    subscriptionRef.current = subscription;
 
-    return () => subscription.unsubscribe();
-  }, []);
 
   const addNewTask = () => {
     setError(null);
@@ -45,14 +37,14 @@ const NewTaskForm = () => {
       return;
     }
 
-    if (!subscriptionRef.current) {
+    if (!subscription) {
       setError("WebSocket not connected");
       return;
     }
 
     setLoading(true);
 
-    sendTaskAction(subscriptionRef.current, "create", {
+    sendTaskAction(subscription, "create", {
       ...newTask,
       status: activeColumn,
     });
