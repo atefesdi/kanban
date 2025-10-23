@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { loginResponse } from "../types/types";
-import { signInUser, signUpUser } from "../api/auth";
+import { signInUser, signUpUser, getProfileUser } from "../api/auth";
 
 interface AuthContextType{
   user: loginResponse["user"] | null;
@@ -26,6 +27,16 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchProfile = async ()=> {
+      const data = await getProfileUser()
+      console.log('data :>> ', data);
+      setUser(data)
+    }
+
+    fetchProfile()
+  }, []);
 
    useEffect(() => {
     const savedToken = localStorage.getItem("jwt");

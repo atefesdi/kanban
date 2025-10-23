@@ -22,7 +22,6 @@ const Layout = ({ children, pageTitle = "My Kanban Board" }: LayoutProps) => {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const logoutHandler = () => logout();
-
   return (
     <div className={styles.appContainer}>
       {/* Sidebar */}
@@ -44,7 +43,7 @@ const Layout = ({ children, pageTitle = "My Kanban Board" }: LayoutProps) => {
         </div>
 
         <nav className={styles.nav}>
-          <a href="/home" className={styles.navLink}>
+          <a href="/" className={styles.navLink}>
             <FaTachometerAlt /> <span>Dashboard</span>
           </a>
           <a href="/projects" className={styles.navLink}>

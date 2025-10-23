@@ -29,10 +29,24 @@ export const signUpUser = async (email: string, password: string, name: string, 
 
   } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
-            console.log('err :>> ', err);
       throw new Error(err?.response?.data);
     }else{
       throw new Error("Unexpected error occurred.");
     }
   }
 };
+
+
+export const getProfileUser = async () => {
+  try{
+   const response = await api.get("/profile")
+   return response.data
+
+  }catch (err: unknown){
+    if(axios.isAxiosError(err)) {
+      throw new Error(err?.response?.data)
+    }else{
+      throw new Error("Unexpected error occurred.");
+    }
+  }
+}

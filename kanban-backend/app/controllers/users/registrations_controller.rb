@@ -11,8 +11,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :user,
       nil
     ).first
-
-
       render json: {
         user: {
           id: resource.id,
