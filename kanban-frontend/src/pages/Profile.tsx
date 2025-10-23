@@ -63,10 +63,15 @@ const Profile: React.FC = () => {
             alt="Profile Avatar"
             className={styles.avatar}
           />
-          <label className={styles.uploadBtn}>
+          <label htmlFor="avatar-upload" className={styles.uploadBtn}>
             Change Photo
-            <input type="file" accept="image/*" onChange={handleFileChange} />
           </label>
+          <input
+          id="avatar-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          />
         </div>
 
         <div className={styles.infoSection}>

@@ -17,7 +17,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, pageTitle = "My Kanban Board" }: LayoutProps) => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -70,11 +70,16 @@ const Layout = ({ children, pageTitle = "My Kanban Board" }: LayoutProps) => {
         <header className={styles.navbar}>
           <h1 className={styles.title}>{pageTitle}</h1>
 
+          <img src="/public/pic.png" alt="pic"  className={styles.pic}/>
+
           <div className={styles.userSection}>
             <div className={styles.userInfo}>
-              <span className={styles.username}>Ati</span>
+              <span className={styles.username}>{user?.name}</span>
             </div>
-            <FaUserCircle className={styles.userAvatar} />
+              <img
+            src={user?.avatar_url || "/default-avatar.png"}
+            alt="Profile Avatar"
+            className={styles.userAvatar}/>
           </div>
         </header>
 
