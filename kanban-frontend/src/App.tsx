@@ -4,7 +4,7 @@ import Home from "./pages/home";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import SignUp from "./pages/SignUp";
 import NewTask from "./pages/NewTask";
-
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -16,6 +16,7 @@ function App() {
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>} >
           <Route path="/new-task" element={ <NewTask/> } />
         </Route>
+        <Route path="/profile" element={<Profile />} />
       </Routes>
   )
 }

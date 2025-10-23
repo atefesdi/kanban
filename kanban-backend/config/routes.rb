@@ -15,5 +15,9 @@ Rails.application.routes.draw do
   resources :tasks
   get "up" => "rails/health#show", as: :rails_health_check
 
+  get "/profile", to: "users#show"
+  put "/profile", to: "users#update"
+  patch "/profile", to: "users#update"
+
   mount ActionCable.server => "/cable"
 end

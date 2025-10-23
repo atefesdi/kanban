@@ -8,6 +8,7 @@ interface AuthContextType{
   user: loginResponse["user"] | null;
   jwt: string | null;
   setJwt: (token:string) => void;
+  setUser: React.Dispatch<React.SetStateAction<loginResponse["user"] | null>>;
   signIn: (email: string, password: string) => Promise<boolean>;
   signUp: (email: string, password: string, name:string, password_confirmation:string) => Promise<boolean>;
   logout: () => void;
@@ -73,7 +74,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, jwt, setJwt, logout, signIn ,loading, isAuthenticated, signUp}}>
+    <AuthContext.Provider value={{ user, jwt, setUser, setJwt, logout, signIn ,loading, isAuthenticated, signUp}}>
       {children}
     </AuthContext.Provider>
   )

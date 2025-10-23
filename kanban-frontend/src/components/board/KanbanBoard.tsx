@@ -82,8 +82,9 @@ const KanbanBoard = () => {
 
   return (
     <>
-      <Link to="/new-task" className={styles.popup}>
-        Add New Task <IoAdd />
+      <Link to="/new-task" className={styles.addTaskButton}>
+        <IoAdd className={styles.icon} />
+        <span>Add New Task</span>
       </Link>
 
       <div className={styles.boardWrapper}>

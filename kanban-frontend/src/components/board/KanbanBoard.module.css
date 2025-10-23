@@ -83,24 +83,39 @@
 }
 
 /* New Task Button */
-.popup {
-  background-color: #3182ce;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  display: flex;
+.addTaskButton {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #3182ce, #2b6cb0);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.7rem 1.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  width: fit-content;
 }
 
-.popup:hover {
-  background-color: #2b6cb0;
+.addTaskButton:hover {
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+  background: linear-gradient(180deg, #3182ce, #2b6cb0);
 }
+
+.icon {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.addTaskButton:hover .icon {
+  transform: rotate(90deg);
+}
+
 
 /* Scrollbar for horizontal scroll */
 .boardWrapper::-webkit-scrollbar {

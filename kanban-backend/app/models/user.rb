@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  has_one_attached :avatar
+
   # Associations for Kanban
   has_many :created_tasks, class_name: "Task", foreign_key: "created_by_id"
   has_many :assigned_tasks, class_name: "Task", foreign_key: "assigned_by_id"
